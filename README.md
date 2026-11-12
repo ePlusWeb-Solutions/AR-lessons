@@ -1,6 +1,7 @@
 # مشغل الدروس التفاعلي — نموذج GLB المحسن (`lessons-3d`)
 > **موقع مصغر مستقل بالكامل (Standalone 3D Micro-website)**  
-> **تطوير وتصميم**: الوكالة للأبحاث الرقمية والتطوير ([alwkala.com](https://alwkala.com))
+> **تطوير وتصميم**: ePlusWeb | eLearning Solutions
+([ePlusWeb-Solutions](https://github.com/ePlusWeb-Solutions))
 
 ---
 
