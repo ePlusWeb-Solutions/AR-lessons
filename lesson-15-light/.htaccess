@@ -1,0 +1,31 @@
+# ==========================================================
+# Alwkala Digital Labs - Qahera UI 3D GLB Micro-website Config
+# ==========================================================
+AddDefaultCharset UTF-8
+<IfModule mod_mime.c>
+  AddType model/gltf-binary .glb
+  AddType model/gltf+json .gltf
+  AddType font/otf .otf
+  AddType font/ttf .ttf
+  AddType font/woff .woff
+  AddType font/woff2 .woff2
+  AddType application/javascript .js
+  AddType audio/mpeg .mp3
+  AddType image/svg+xml .svg
+</IfModule>
+Options -Indexes
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json font/otf image/svg+xml model/gltf-binary
+</IfModule>
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType model/gltf-binary "access plus 1 month"
+  ExpiresByType font/otf "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType image/svg+xml "access plus 1 month"
+</IfModule>
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set Permissions-Policy "camera=(self), microphone=()"
+</IfModule>

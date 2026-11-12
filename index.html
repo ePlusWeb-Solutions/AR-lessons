@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>مشغل الدروس التفاعلية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+@font-face {
+  font-family: "Tmanya Display";
+  src: url("lessons/tmanya-display.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --bg-main: #0c1512;
+  --card-bg: rgba(18, 30, 26, 0.85);
+  --border: rgba(255, 255, 255, 0.12);
+  --gold: #e2b04a;
+  --gold-glow: rgba(226, 176, 74, 0.35);
+  --green: #2d8a4e;
+  --sand: #f0e6cf;
+  --text: #f7f5ed;
+  --muted: #95a89e;
+  --radius-lg: 20px;
+  --radius-md: 14px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--bg-main);
+  color: var(--text);
+  font-family: "IBM Plex Sans Arabic", "Alexandria", sans-serif;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+}
+
+h1, h2, h3, h4, .brand-name {
+  font-family: "Tmanya Display", "Alexandria", sans-serif;
+  letter-spacing: -0.2px;
+}
+
+.nav-btn, .btn, .subject-badge {
+  font-family: "Alexandria", sans-serif;
+}
+
+/* شريط التنقل */
+.navbar {
+  position: sticky;
+  top: 0;
+  background: rgba(12, 21, 18, 0.92);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 100;
+}
+
+.brand-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-logo {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--gold);
+  color: #0c1512;
+  font-weight: 800;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 14px var(--gold-glow);
+}
+
+.brand-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--sand);
+}
+
+.nav-links {
+  display: flex;
+  gap: 10px;
+}
+
+.nav-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.nav-btn:hover, .nav-btn.active {
+  background: var(--gold);
+  color: #0c1512;
+  border-color: var(--gold);
+}
+
+/* الحاوية الرئيسية */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  width: 100%;
+  flex: 1;
+}
+
+.hero-box {
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 24px 16px;
+  background: radial-gradient(circle at 50% 20%, rgba(226, 176, 74, 0.12) 0%, transparent 70%);
+}
+
+.hero-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--sand);
+  margin-bottom: 8px;
+}
+
+.hero-subtitle {
+  color: var(--muted);
+  font-size: 15px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* شبكة الدروس */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--sand);
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 20px;
+}
+
+.lesson-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  backdrop-filter: blur(12px);
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.lesson-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(226, 176, 74, 0.45);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.lesson-card.featured::before {
+  content: "معتمد المنهج";
+  position: absolute;
+  top: 14px;
+  left: -28px;
+  background: var(--gold);
+  color: #0c1512;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 3px 30px;
+  transform: rotate(-45deg);
+}
+
+.card-top {
+  margin-bottom: 16px;
+}
+
+.subject-badge {
+  display: inline-block;
+  background: rgba(45, 138, 78, 0.25);
+  border: 1px solid var(--green);
+  color: #8ce3a8;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--sand);
+  margin-bottom: 6px;
+}
+
+.card-desc {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.card-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 14px 0 20px;
+}
+
+.tag-item {
+  background: rgba(255, 255, 255, 0.06);
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  color: var(--text);
+}
+
+.card-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  appearance: none;
+  border: 0;
+  border-radius: var(--radius-md);
+  min-height: 42px;
+  padding: 8px 16px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-decoration: none;
+  flex: 1;
+  transition: all 0.2s;
+}
+
+.btn.primary {
+  background: var(--gold);
+  color: #0c1512;
+  box-shadow: 0 4px 12px var(--gold-glow);
+}
+
+.btn.primary:hover {
+  background: #ecc266;
+}
+
+.btn.secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.btn.secondary:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* قسم ميزات المنظومة */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 40px;
+}
+
+.feature-item {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  text-align: center;
+}
+
+.feature-icon {
+  font-size: 26px;
+  margin-bottom: 8px;
+  display: inline-block;
+}
+
+.feature-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--sand);
+  margin-bottom: 4px;
+}
+
+.feature-text {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* تذييل الصفحة */
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 20px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+  background: rgba(12, 21, 18, 0.6);
+}
+</style>
+</head>
+<body>
+
+<!-- شريط التنقل -->
+<nav class="navbar">
+  <div class="brand-group">
+    <div class="brand-logo">م</div>
+    <span class="brand-name">مشغل الدروس</span>
+  </div>
+  <div class="nav-links">
+    <a href="#" class="nav-btn active">الرئيسية</a>
+    <a href="#lessons" class="nav-btn">الدروس</a>
+    <a href="#features" class="nav-btn">المزايا</a>
+  </div>
+</nav>
+
+<!-- المحتوى الرئيسي -->
+<main class="container">
+
+  <!-- واجهة الترحيب -->
+  <section class="hero-box">
+    <h1 class="hero-title">منظومة الدروس المعززة</h1>
+    <p class="hero-subtitle">
+      تطبيق تفاعلي لشرح مفاهيم المقررات الدراسية بالواقع المعزز الخفيف دون الحاجة لنظارات أو تجهيزات خاصة.
+    </p>
+  </section>
+
+  <!-- قائمة الدروس -->
+  <section id="lessons">
+    <div class="section-header">
+      <h2 class="section-title">الدروس المتاحة</h2>
+    </div>
+
+    <div class="cards-grid">
+
+      <!-- بطاقة الدرس 15: النسخة المحسنة بنموذج GLB ثلاثي الأبعاد -->
+      <article class="lesson-card featured" style="background: linear-gradient(145deg, #1b3629 0%, #0f2119 100%); border-color: rgba(226, 176, 74, 0.55);">
+        <div class="card-top">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
+            <span class="subject-badge" style="background: rgba(226,176,74,0.22); border-color:#e2b04a; color:#fce7b2;">نموذج 3D</span>
+            <span class="subject-badge">GLB + PBR</span>
+          </div>
+          <h3 class="card-title">مثل كلمة طيبة — نموذج 3D</h3>
+          <p class="card-desc">
+            النسخة المستقلة المحسنة بنموذج GLB ثلاثي الأبعاد (low_poly_tree) مع مقطع التربة والجذور والثمار المتنامية وإضاءة ACES Filmic بنمط Qahera UI النهاري.
+          </p>
+          <div class="card-tags">
+            <span class="tag-item">نموذج GLB</span>
+            <span class="tag-item">دعم file://</span>
+            <span class="tag-item">ACES Filmic</span>
+            <span class="tag-item">Qahera UI</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a href="lesson-15/index.html" class="btn primary">تشغيل</a>
+          <a href="lesson-15-light/index.html" class="btn secondary">النهاري</a>
+        </div>
+      </article>
+
+      <!-- بطاقة الدرس 15: النسخة النهارية المعتمدة (Qahera Light Mode) -->
+      <article class="lesson-card" style="background: linear-gradient(145deg, #182e24 0%, #11221a 100%); border-color: rgba(226, 176, 74, 0.4);">
+        <div class="card-top">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
+            <span class="subject-badge" style="background: rgba(226,176,74,0.18); border-color:#e2b04a; color:#fce7b2;">النمط النهاري</span>
+            <span class="subject-badge">Qahera UI</span>
+          </div>
+          <h3 class="card-title">مثل كلمة طيبة — النسخة النهارية</h3>
+          <p class="card-desc">
+            نسخة مستقلة بنمط الإضاءة النهارية وفق معايير Qahera UI Kit وأيقونات SVG نقية بدون إيموجي، مع بيئة شمسية مضيئة وتأطير ذكي متجاوب.
+          </p>
+          <div class="card-tags">
+            <span class="tag-item">نمط نهاري</span>
+            <span class="tag-item">أيقونات SVG</span>
+            <span class="tag-item">سماء شمسية</span>
+            <span class="tag-item">Qahera Tokens</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a href="lesson-15/index.html" class="btn primary">تشغيل</a>
+          <a href="lesson-15-light/index.html" class="btn secondary">النهاري</a>
+        </div>
+      </article>
+
+      <!-- بطاقة الدرس 15: مثل كلمة طيبة (النمط الداكن) -->
+      <article class="lesson-card">
+        <div class="card-top">
+          <span class="subject-badge">القرآن الكريم وتفسيره</span>
+          <h3 class="card-title">مثل كلمة طيبة كشجرة طيبة</h3>
+          <p class="card-desc">
+            سورة إبراهيم (الآيات ٢٤–٢٦) — الصف الأول الثانوي (منهج سعودي). مجسم ثلاثي الأبعاد لنخلة التمر مع مقطع التربة، واختبار الريح التفاعلي ومطابقة المفاهيم.
+          </p>
+          <div class="card-tags">
+            <span class="tag-item">تلاوة صوتية</span>
+            <span class="tag-item">محاكاة ريح</span>
+            <span class="tag-item">ملصقات 3D</span>
+            <span class="tag-item">واقع معزز</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a href="lesson-15/index.html" class="btn primary">تشغيل</a>
+          <a href="lesson-15-light/index.html" class="btn secondary">النهاري</a>
+        </div>
+      </article>
+
+      <!-- بطاقة درس قادم 1 -->
+      <article class="lesson-card" style="opacity: 0.75;">
+        <div class="card-top">
+          <span class="subject-badge" style="border-color: #e2b04a; color: #fce7b2;">قريباً</span>
+          <h3 class="card-title">مثل حبة أنبتت سبع سنابل</h3>
+          <p class="card-desc">
+            سورة البقرة (الآية ٢٦١) — مضاعفة أجر الصدقة وثمار الإنفاق في سبيل الله بنمذجة سنبلة القمح ومضاعفة الحبات بصرياً.
+          </p>
+          <div class="card-tags">
+            <span class="tag-item">مضاعفة تفاعلية</span>
+            <span class="tag-item">إنفاق وتدبر</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="btn secondary" disabled>مجدول</button>
+        </div>
+      </article>
+
+      <!-- بطاقة درس قادم 2 -->
+      <article class="lesson-card" style="opacity: 0.75;">
+        <div class="card-top">
+          <span class="subject-badge" style="border-color: #e2b04a; color: #fce7b2;">قريباً</span>
+          <h3 class="card-title">مثل نور الله كمشكاة فيها مصباح</h3>
+          <p class="card-desc">
+            سورة النور (الآية ٣٥) — محاكاة بصرية لتفاعل طبقات النور: المشكاة، الزجاجة، المصباح، وشجرة الزيتون المباركة.
+          </p>
+          <div class="card-tags">
+            <span class="tag-item">إضاءة حركية</span>
+            <span class="tag-item">تفسير عقدي</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="btn secondary" disabled>مجدول</button>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- مزايا المشغل -->
+  <section id="features" class="features-grid">
+    <div class="feature-item">
+      <span class="feature-icon">📱</span>
+      <h4 class="feature-title">دون تجهيزات</h4>
+      <p class="feature-text">يعمل مباشرة في المتصفح على أي جوال أو جهاز لوحي دون نظارات خاصة.</p>
+    </div>
+    <div class="feature-item">
+      <span class="feature-icon">🔊</span>
+      <h4 class="feature-title">صوت فيزيائي</h4>
+      <p class="feature-text">محاكاة حية لصوت الرياح المتصاعد وتلاوة قرآنية واهتزازات لمسية تفاعلية.</p>
+    </div>
+    <div class="feature-item">
+      <span class="feature-icon">🎯</span>
+      <h4 class="feature-title">تصميم منهجي</h4>
+      <p class="feature-text">مبني وفق دورة التعلم (تنبؤ ← استكشاف ← اختبار ← استرجاع نشط وتدبر).</p>
+    </div>
+    <div class="feature-item">
+      <span class="feature-icon">✨</span>
+      <h4 class="feature-title">ملصقات مكانية</h4>
+      <p class="feature-text">ربط الآيات القرآنية بأجزاء المجسم مباشرة في الفضاء الثلاثي الأبعاد.</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- تذييل الصفحة -->
+<footer class="footer">
+  مشغل الدروس التفاعلية المعززة · الصف الأول الثانوي · منهج وزارة التعليم بالمملكة العربية السعودية
+</footer>
+
+</body>
+</html>
+

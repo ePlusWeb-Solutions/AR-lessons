@@ -1,0 +1,2378 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>الدرس 15: مثل كلمة طيبة — سورة إبراهيم</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700;800&family=Amiri+Quran&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!--
+  مقرر التفسير ١ — الصف الأول الثانوي (المنهج السعودي)
+  الوحدة السابعة: سورة إبراهيم — الدرس 15 (صفحة 106 - 109)
+  تطبيق الدرس التفاعلي: مثل الكلمة الطيبة والكلمة الخبيثة
+-->
+<style>
+@font-face {
+  font-family: "Tmanya Display";
+  src: url("assets/vendor/tmanya-display.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --bg-top: #15261f;
+  --bg-bottom: #09120e;
+  --panel-bg: rgba(14, 24, 20, 0.94);
+  --panel-border: rgba(255, 255, 255, 0.12);
+  --gold: #e2b04a;
+  --gold-glow: rgba(226, 176, 74, 0.35);
+  --palm-leaf: #32834b;
+  --date: #df8a1a;
+  --sand: #f0e6cf;
+  --text: #f7f5ed;
+  --text-muted: #95a89e;
+  --success: #10b981;
+  --danger: #ef4444;
+  --radius-lg: 18px;
+  --radius-md: 12px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: "IBM Plex Sans Arabic", "Alexandria", "Noto Sans Arabic", sans-serif;
+  color: var(--text);
+  background: radial-gradient(ellipse at 50% 35%, var(--bg-top) 0%, var(--bg-bottom) 100%);
+}
+
+h1, h2, h3, h4, .stage-title, .header-chip {
+  font-family: "Tmanya Display", "Alexandria", sans-serif;
+  letter-spacing: -0.2px;
+}
+
+.btn, .spatial-pin, .item-term, .status-pill, .card-box h4 {
+  font-family: "Alexandria", "Tmanya Display", sans-serif;
+}
+
+body.ar-mode {
+  background: transparent;
+}
+
+#cam {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+  z-index: 1;
+}
+
+body.ar-mode #cam {
+  display: block;
+}
+
+#canvas-3d {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 2;
+  touch-action: none;
+}
+
+/* الملصقات المكانية ثلاثية الأبعاد */
+#pins-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.spatial-pin {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(14, 24, 20, 0.94);
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--sand);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.6), 0 0 10px var(--gold-glow);
+  backdrop-filter: blur(8px);
+  white-space: nowrap;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.spatial-pin:hover, .spatial-pin.active {
+  transform: translate(-50%, -50%) scale(1.1);
+  background: var(--gold);
+  color: #0c1512;
+}
+
+.spatial-pin .pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gold);
+  animation: pulse-ring 1.8s infinite;
+}
+
+.spatial-pin.active .pulse-dot {
+  background: #0c1512;
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.85); opacity: 0.5; }
+  50% { transform: scale(1.35); opacity: 1; }
+  100% { transform: scale(0.85); opacity: 0.5; }
+}
+
+/* شريط الرأس */
+.app-header {
+  position: fixed;
+  top: max(8px, env(safe-area-inset-top));
+  inset-inline: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.app-header > * {
+  pointer-events: auto;
+}
+
+.header-chip {
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  backdrop-filter: blur(10px);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.header-chip b {
+  color: var(--gold);
+}
+
+.action-row {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.circle-btn {
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  color: var(--text);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.circle-btn:hover {
+  border-color: var(--gold);
+}
+
+.circle-btn.active {
+  background: var(--gold);
+  color: #0c1512;
+  border-color: var(--gold);
+}
+
+.developer-card { gap: 12px; }
+.developer-card p { color: var(--text-muted); font-size: 13px; line-height: 1.7; }
+.developer-links { width: 100%; display: flex; gap: 8px; }
+.developer-links a { flex: 1; text-decoration: none; }
+.icon-link { color: var(--gold); font-size: 14px; font-weight: 700; text-decoration: none; }
+
+/* شريط الآية والتلاوة المدمج */
+.ayah-card {
+  position: fixed;
+  top: calc(max(8px, env(safe-area-inset-top)) + 46px);
+  inset-inline: 12px;
+  margin-inline: auto;
+  max-width: 500px;
+  background: rgba(14, 24, 20, 0.94);
+  border: 1px solid rgba(226, 176, 74, 0.4);
+  border-radius: var(--radius-md);
+  padding: 6px 12px;
+  z-index: 15;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ayah-body {
+  flex: 1;
+  font-family: "Amiri Quran", "KFGQPC Uthmanic Script HAFS", "Noto Naskh Arabic", serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #fce7b2;
+  text-align: center;
+}
+
+.play-chip {
+  background: rgba(226, 176, 74, 0.15);
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+
+.play-chip:hover {
+  background: var(--gold);
+  color: #0c1512;
+}
+
+/* اللوحة السفلية العائمة والمدمجة (Floating Dock) */
+.bottom-sheet {
+  position: fixed;
+  bottom: max(12px, env(safe-area-inset-bottom));
+  inset-inline: 14px;
+  margin-inline: auto;
+  width: min(560px, calc(100% - 28px));
+  max-width: 560px;
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-lg);
+  padding: 8px 14px 10px;
+  z-index: 25;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  transition: max-height 0.3s cubic-bezier(0.1, 0.9, 0.2, 1);
+  max-height: min(44vh, 420px);
+}
+
+.bottom-sheet.collapsed {
+  max-height: 48px;
+  overflow: hidden;
+}
+
+.sheet-handle-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  padding-bottom: 2px;
+}
+
+.drag-pill {
+  width: 28px;
+  height: 3.5px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 2px;
+  margin-bottom: 4px;
+}
+
+.sheet-heading-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.stage-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--sand);
+  font-family: "Thmanyah", "Alexandria", "Noto Sans Arabic", sans-serif;
+}
+
+.toggle-arrow {
+  font-size: 12px;
+  color: var(--text-muted);
+  transition: transform 0.3s;
+}
+
+.bottom-sheet.collapsed .toggle-arrow {
+  transform: rotate(180deg);
+}
+
+.timeline-progress {
+  display: flex;
+  gap: 5px;
+  width: 100%;
+  margin: 4px 0 6px;
+}
+
+.timeline-progress span {
+  flex: 1;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 2px;
+  transition: background 0.3s;
+}
+
+.timeline-progress span.done {
+  background: var(--success);
+}
+
+.timeline-progress span.current {
+  background: var(--gold);
+  box-shadow: 0 0 8px var(--gold-glow);
+}
+
+.sheet-body {
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  overscroll-behavior: contain;
+  padding: 2px 0 4px;
+  scrollbar-width: thin;
+}
+
+.footer-nav {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+  .bottom-sheet { padding: 8px 10px max(10px, env(safe-area-inset-bottom)); }
+  .sheet-body { min-height: 82px; }
+  .btn { min-height: 38px; }
+}
+
+/* الأزرار والعناصر التعليمية */
+.btn {
+  appearance: none;
+  border: 0;
+  border-radius: var(--radius-md);
+  min-height: 36px;
+  padding: 6px 12px;
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 700;
+  font-family: "Thmanyah", "Alexandria", "Noto Sans Arabic", sans-serif;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--text);
+  transition: all 0.2s;
+  flex: 1;
+}
+
+.btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.btn.gold {
+  background: var(--gold);
+  color: #0c1512;
+  box-shadow: 0 4px 12px var(--gold-glow);
+}
+
+.btn.selected {
+  background: var(--palm-leaf);
+  color: #fff;
+}
+
+.btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.grid-choices {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 6px;
+  margin: 4px 0;
+}
+
+.card-box {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  padding: 6px 10px;
+  margin: 4px 0;
+}
+
+.card-box h4 {
+  color: var(--gold);
+  font-size: 13px;
+  margin-bottom: 2px;
+}
+
+.card-box p {
+  font-size: 12.5px;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.slider-panel {
+  margin: 4px 0;
+}
+
+.slider-label-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12.5px;
+  margin-bottom: 2px;
+}
+
+input[type="range"] {
+  width: 100%;
+  height: 30px;
+  accent-color: var(--gold);
+  cursor: pointer;
+}
+
+/* بطاقات المطابقة للاسترجاع النشط */
+.matching-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin: 4px 0;
+}
+
+.match-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 5px 8px;
+  border-radius: var(--radius-md);
+}
+
+.item-term {
+  font-weight: 700;
+  color: var(--gold);
+  font-size: 12.5px;
+  min-width: 80px;
+}
+
+.item-select {
+  flex: 1;
+  background: rgba(14, 24, 20, 0.95);
+  color: var(--text);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  padding: 4px 6px;
+  font: inherit;
+  font-size: 12px;
+  outline: none;
+}
+
+/* إشعار عائم */
+.status-pill {
+  position: fixed;
+  top: calc(max(8px, env(safe-area-inset-top)) + 95px);
+  inset-inline: 0;
+  margin-inline: auto;
+  width: max-content;
+  max-width: calc(100% - 32px);
+  background: var(--gold);
+  color: #0c1512;
+  font-weight: 700;
+  font-size: 12.5px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  z-index: 30;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+  display: none;
+  text-align: center;
+}
+
+.status-pill.show {
+  display: block;
+}
+
+/* ==========================================================
+   شاشات التمهيد والتهنئة بالحجم الكامل (Intro & Completion)
+   ========================================================== */
+.fullscreen-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: radial-gradient(ellipse at 50% 30%, #15261f 0%, #08110d 95%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 16px;
+  overflow-y: auto;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.fullscreen-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.overlay-card {
+  width: 100%;
+  max-width: 520px;
+  background: rgba(14, 24, 20, 0.94);
+  border: 1px solid rgba(226, 176, 74, 0.35);
+  border-radius: var(--radius-lg);
+  padding: 24px 20px 22px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.7), 0 0 24px rgba(226, 176, 74, 0.15);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+}
+
+.meta-badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.meta-badge {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--sand);
+}
+
+.meta-badge.gold {
+  background: rgba(226, 176, 74, 0.18);
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.intro-title {
+  font-family: "Tmanya Display", "Alexandria", sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.3px;
+  margin-bottom: 4px;
+}
+
+.intro-subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+
+.intro-verse-box {
+  width: 100%;
+  background: rgba(226, 176, 74, 0.08);
+  border: 1px solid rgba(226, 176, 74, 0.3);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-family: "Amiri Quran", "Noto Naskh Arabic", serif;
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: #fce7b2;
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+.intro-goals-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+  text-align: right;
+}
+
+.goal-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+}
+
+.goal-icon {
+  font-size: 18px;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.goal-text b {
+  display: block;
+  font-size: 12.5px;
+  color: var(--gold);
+  font-family: "Alexandria", sans-serif;
+  margin-bottom: 2px;
+}
+
+.goal-text span {
+  display: block;
+  font-size: 11.5px;
+  color: var(--sand);
+  line-height: 1.45;
+}
+
+.intro-features-row {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  font-size: 11.5px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.btn-hero {
+  width: 100%;
+  min-height: 44px;
+  font-size: 15px;
+  border-radius: var(--radius-md);
+}
+
+/* شاشة التهنئة */
+.trophy-badge {
+  font-size: 46px;
+  line-height: 1;
+  margin-bottom: 8px;
+  filter: drop-shadow(0 0 18px rgba(226, 176, 74, 0.5));
+}
+
+.stats-summary-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.stat-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  padding: 8px 6px;
+  text-align: center;
+}
+
+.stat-card .stat-icon {
+  font-size: 18px;
+  margin-bottom: 2px;
+}
+
+.stat-card .stat-title {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+
+.stat-card .stat-value {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--gold);
+  font-family: "Alexandria", sans-serif;
+  margin-bottom: 2px;
+}
+
+.stat-card .stat-desc {
+  font-size: 10px;
+  color: var(--sand);
+  line-height: 1.3;
+}
+
+.takeaway-box {
+  width: 100%;
+  background: rgba(46, 133, 73, 0.15);
+  border: 1px solid rgba(46, 133, 73, 0.35);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  font-size: 12px;
+  color: var(--text);
+  line-height: 1.55;
+  text-align: right;
+  margin-bottom: 16px;
+}
+
+.takeaway-box b {
+  color: var(--gold);
+  display: block;
+  margin-bottom: 3px;
+  font-family: "Alexandria", sans-serif;
+}
+
+.completion-actions-row {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+}
+</style>
+</head>
+<body>
+
+<!-- شاشة البداية والتمهيد للدرس -->
+<div class="fullscreen-overlay" id="intro-screen">
+  <div class="overlay-card">
+    <div class="meta-badge-row">
+      <span class="meta-badge">التفسير ١</span>
+      <span class="meta-badge gold">الدرس 15</span>
+      <span class="meta-badge">المرحلة الثانوية</span>
+    </div>
+    <h1 class="intro-title">مَثَلُ كَلِمَةٍ طَيِّبَةٍ</h1>
+    <p class="intro-subtitle">سورة إبراهيم (الآيات 24–26) · تجربة تفاعلية</p>
+
+    <div class="intro-verse-box">
+      ﴿أَلَمْ تَرَ كَيْفَ ضَرَبَ اللَّهُ مَثَلًا كَلِمَةً طَيِّبَةً كَشَجَرَةٍ طَيِّبَةٍ أَصْلُهَا ثَابِتٌ وَفَرْعُهَا فِي السَّمَاءِ﴾
+    </div>
+
+    <div class="intro-goals-list">
+      <div class="goal-item">
+        <div class="goal-icon">🌳</div>
+        <div class="goal-text">
+          <b>استكشاف المثل القرآني</b>
+          <span>ربط أجزاء الشجرة الثلاثة بحقائق الإيمان والعمل الصالح.</span>
+        </div>
+      </div>
+      <div class="goal-item">
+        <div class="goal-icon">💨</div>
+        <div class="goal-text">
+          <b>اختبار الريح والعاصفة</b>
+          <span>مشاهدة ثبات الشجرة الطيبة وزوال الشجرة الخبيثة.</span>
+        </div>
+      </div>
+      <div class="goal-item">
+        <div class="goal-icon">🎯</div>
+        <div class="goal-text">
+          <b>الاسترجاع النشط والتدبر</b>
+          <span>ترسيخ معاني المفردات وأثر الكلمة الطيبة في السلوك.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="intro-features-row">
+      <span>🔄 تدوير 3D</span>
+      <span>🔊 تلاوة صوتية</span>
+      <span>📷 واقع معزز</span>
+    </div>
+
+    <button class="btn gold btn-hero" id="btn-start-intro">بدء الدرس</button>
+  </div>
+</div>
+
+<!-- شاشة التهنئة والإنجاز عند إتمام الدرس -->
+<div class="fullscreen-overlay hidden" id="completion-screen">
+  <div class="overlay-card">
+    <div class="trophy-badge">🏆</div>
+    <div class="meta-badge gold" style="margin-bottom: 8px;">إنجاز مكتمل</div>
+    <h1 class="intro-title" style="color: var(--gold); margin-bottom: 4px;">مبارك إتمامك!</h1>
+    <p class="intro-subtitle" style="margin-bottom: 12px;">أتممت دراسة مثل الكلمة الطيبة والكلمة الخبيثة بنجاح</p>
+
+    <div class="intro-verse-box" style="margin-bottom: 14px;">
+      ﴿إِلَيْهِ يَصْعَدُ الْكَلِمُ الطَّيِّبُ وَالْعَمَلُ الصَّالِحُ يَرْفَعُهُ﴾
+    </div>
+
+    <div class="stats-summary-grid">
+      <div class="stat-card">
+        <div class="stat-icon">🌳</div>
+        <div class="stat-title">استكشاف المثل</div>
+        <div class="stat-value">100%</div>
+        <div class="stat-desc">أصلها ثابت · فرعها في السماء · تؤتي أكلها</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">💨</div>
+        <div class="stat-title">اختبار الريح</div>
+        <div class="stat-value">اجتياز</div>
+        <div class="stat-desc">ثبات شجرة التوحيد واقتلاع الخبيثة</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🎯</div>
+        <div class="stat-title">معاني المفردات</div>
+        <div class="stat-value">3 / 3</div>
+        <div class="stat-desc">إتقان تام لمطابقة معاني الآيات المقررة</div>
+      </div>
+    </div>
+
+    <div class="takeaway-box">
+      <b>ثمرة الكلمة في حياتك:</b>
+      <p>الكلمة الطيبة تغرس اليقين في القلب، وترفع العمل الصالح إلى السماء، وتثمر خيراً ونفعاً متجدداً في كل حين، فاجعل لسانك رطباً بالطيب من القول.</p>
+    </div>
+
+    <div class="completion-actions-row">
+      <button class="btn" id="btn-restart-lesson">إعادة</button>
+      <a href="../index.html" class="btn gold" id="btn-portal-home">الرئيسية</a>
+    </div>
+  </div>
+</div>
+
+<video id="cam" playsinline muted autoplay></video>
+<canvas id="canvas-3d"></canvas>
+
+<!-- ملصقات الأجزاء ثلاثية الأبعاد -->
+<div id="pins-layer">
+  <div class="spatial-pin" id="pin-branch" data-part="branch" style="display:none">
+    <div class="pulse-dot"></div>
+    <span>فرعها في السماء</span>
+  </div>
+  <div class="spatial-pin" id="pin-fruit" data-part="fruit" style="display:none">
+    <div class="pulse-dot"></div>
+    <span>تؤتي أكلها</span>
+  </div>
+  <div class="spatial-pin" id="pin-roots" data-part="roots" style="display:none">
+    <div class="pulse-dot"></div>
+    <span>أصلها ثابت</span>
+  </div>
+</div>
+
+<!-- شريط الرأس المتجاوب -->
+<header class="app-header">
+  <div class="header-chip">
+    <span>الدرس 15</span> · <b>سورة إبراهيم (24–26)</b>
+  </div>
+  <div class="action-row">
+    <button class="circle-btn" id="btn-sound" title="صوت">🔊</button>
+    <button class="circle-btn" id="btn-cam" title="كاميرا">📷</button>
+    <button class="circle-btn" id="btn-fullscreen" title="ملء الشاشة" aria-label="ملء الشاشة">⛶</button>
+    <button class="circle-btn" id="btn-info" title="عن المطور" aria-label="عن المطور">ⓘ</button>
+    <button class="circle-btn" id="btn-recenter" title="إعادة">↺</button>
+  </div>
+</header>
+
+<section class="fullscreen-overlay hidden" id="developer-dialog" role="dialog" aria-modal="true" aria-labelledby="developer-title">
+  <div class="overlay-card developer-card">
+    <div class="meta-badge gold">حقوق التطوير</div>
+    <h2 id="developer-title" class="intro-title">تطوير ePlusWeb</h2>
+    <p>تصميم وتطوير التجربة التعليمية بواسطة ePlusWeb للحلول الرقمية.</p>
+    <div class="developer-links">
+      <a class="btn gold" href="https://eplusweb.com/" target="_blank" rel="noopener noreferrer">الموقع الرسمي</a>
+      <a class="btn" href="https://github.com/ePlusWeb-Solutions" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </div>
+    <button class="btn" id="btn-close-info" type="button">إغلاق</button>
+  </div>
+</section>
+
+<!-- شريط التلاوة المعتمدة للآية المقررة -->
+<section class="ayah-card" id="ayah-card">
+  <button class="play-chip" id="btn-ayah-audio" title="تشغيل التلاوة" aria-label="تشغيل التلاوة">▶</button>
+  <div class="ayah-body" id="ayah-text">
+    ﴿أَلَمْ تَرَ كَيْفَ ضَرَبَ اللَّهُ مَثَلًا كَلِمَةً طَيِّبَةً كَشَجَرَةٍ طَيِّبَةٍ أَصْلُهَا ثَابِتٌ وَفَرْعُهَا فِي السَّمَاءِ﴾
+  </div>
+</section>
+
+<div class="status-pill" id="status-pill"></div>
+
+<!-- اللوحة السفلية العائمة المدمجة -->
+<section class="bottom-sheet" id="bottom-sheet">
+  <div class="sheet-handle-area" id="sheet-handle">
+    <div class="drag-pill"></div>
+    <div class="sheet-heading-row">
+      <span class="stage-title" id="stage-title">المثل القرآني</span>
+      <span class="toggle-arrow">▼</span>
+    </div>
+  </div>
+
+  <div class="timeline-progress" id="timeline-progress">
+    <span></span><span></span><span></span><span></span>
+  </div>
+
+  <div class="sheet-body" id="sheet-body"></div>
+
+  <div class="footer-nav">
+    <button class="btn" id="btn-prev-stage" style="flex:0 0 65px; display:none;">سابق</button>
+    <button class="btn gold" id="btn-next-stage">التالي</button>
+  </div>
+</section>
+
+<!-- استيراد مكتبة Three.js -->
+<script src="three.min.js"></script>
+<script>
+if (typeof THREE === 'undefined') {
+  document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>');
+}
+</script>
+<script src="assets/vendor/GLTFLoader-r128.js"></script>
+<!-- نسخة مضمّنة من نموذج الشجرة الخفيف لتعمل أيضاً عند فتح الصفحة مباشرةً عبر file:// -->
+<script src="assets/models/low_poly_tree-inline.js"></script>
+
+<script>
+(()=>{
+'use strict';
+
+window.addEventListener('error', (event) => {
+  const startButton = document.getElementById('btn-start-intro');
+  if (!startButton || document.getElementById('lesson-init-error')) return;
+  const message = document.createElement('div');
+  message.id = 'lesson-init-error';
+  message.setAttribute('role', 'alert');
+  message.style.cssText = 'margin-top:10px;padding:10px;border-radius:10px;background:#5b2020;color:#fff;font:12px/1.6 sans-serif;direction:rtl';
+  message.textContent = 'تعذر تهيئة الدرس: ' + (event.message || 'حدث خطأ غير معروف');
+  startButton.insertAdjacentElement('afterend', message);
+});
+
+/* ==========================================================
+   1. محرك التلاوة الصوتية والمؤثرات الفيزيائية
+   ========================================================== */
+let ayahTextEl = null;
+let btnAyahAudio = null;
+function updateAyahPlayerButton(isPlaying) {
+  if (!btnAyahAudio) return;
+  btnAyahAudio.textContent = isPlaying ? '■' : '▶';
+  btnAyahAudio.title = isPlaying ? 'إيقاف التلاوة' : 'تشغيل التلاوة';
+  btnAyahAudio.setAttribute('aria-label', btnAyahAudio.title);
+}
+
+class AudioEngine {
+  constructor() {
+    this.ctx = null;
+    this.windGain = null;
+    this.windFilter = null;
+    this.isMuted = false;
+    this.audioPlayer = new Audio();
+    this.recitations = [
+      'https://everyayah.com/data/Husary_128kbps/014024.mp3',
+      'https://everyayah.com/data/Husary_128kbps/014025.mp3',
+      'https://everyayah.com/data/Husary_128kbps/014026.mp3'
+    ];
+  }
+
+  ensureContext() {
+    if (this.ctx) return;
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return;
+    this.ctx = new AudioContextClass();
+    this.createWindSynthesizer();
+  }
+
+  createWindSynthesizer() {
+    if (!this.ctx) return;
+    const bufferSize = this.ctx.sampleRate * 2;
+    const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      data[i] = Math.random() * 2 - 1;
+    }
+
+    const noise = this.ctx.createBufferSource();
+    noise.buffer = buffer;
+    noise.loop = true;
+
+    this.windFilter = this.ctx.createBiquadFilter();
+    this.windFilter.type = 'bandpass';
+    this.windFilter.frequency.setValueAtTime(300, this.ctx.currentTime);
+    this.windFilter.Q.setValueAtTime(2.8, this.ctx.currentTime);
+
+    this.windGain = this.ctx.createGain();
+    this.windGain.gain.setValueAtTime(0, this.ctx.currentTime);
+
+    noise.connect(this.windFilter);
+    this.windFilter.connect(this.windGain);
+    this.windGain.connect(this.ctx.destination);
+    noise.start();
+  }
+
+  setWindForce(val) {
+    if (!this.ctx || this.isMuted) return;
+    const gainVal = Math.min(0.4, Math.pow(val, 1.8) * 0.4);
+    const freqVal = 200 + val * 700;
+    const now = this.ctx.currentTime;
+    this.windGain.gain.setTargetAtTime(gainVal, now, 0.08);
+    this.windFilter.frequency.setTargetAtTime(freqVal, now, 0.08);
+  }
+
+  playTone(freq = 540, type = 'sine') {
+    if (!this.ctx || this.isMuted) return;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+    gain.gain.setValueAtTime(0.18, this.ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.5);
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start();
+    osc.stop(this.ctx.currentTime + 0.5);
+  }
+
+  playChime() {
+    if (!this.ctx || this.isMuted) return;
+    const notes = [523.25, 659.25, 783.99]; // C5, E5, G5
+    notes.forEach((freq, idx) => {
+      setTimeout(() => this.playTone(freq, 'sine'), idx * 75);
+    });
+  }
+
+  playFanfare() {
+    if (!this.ctx || this.isMuted) return;
+    const notes = [523.25, 659.25, 783.99, 1046.5]; // C5, E5, G5, C6
+    notes.forEach((freq, idx) => {
+      setTimeout(() => this.playTone(freq, 'triangle'), idx * 110);
+    });
+  }
+
+  playUproot() {
+    if (!this.ctx || this.isMuted) return;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(140, this.ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(25, this.ctx.currentTime + 0.5);
+    gain.gain.setValueAtTime(0.35, this.ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.55);
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start();
+    osc.stop(this.ctx.currentTime + 0.55);
+  }
+
+  playAyahRecitation(index = 0) {
+    if (this.isMuted) return;
+    const url = this.recitations[index % this.recitations.length];
+    this.audioPlayer.dataset.recitationIndex = String(index % this.recitations.length);
+    this.audioPlayer.src = url;
+    this.audioPlayer.currentTime = 0;
+    this.audioPlayer.play().catch(() => {
+      updateAyahPlayerButton(false);
+      triggerPill('تعذر تشغيل التلاوة؛ تحقق من الاتصال بالإنترنت');
+    });
+  }
+
+  stopAyahRecitation() {
+    this.audioPlayer.pause();
+    this.audioPlayer.currentTime = 0;
+    updateAyahPlayerButton(false);
+  }
+
+  toggleSound() {
+    this.isMuted = !this.isMuted;
+    if (this.isMuted) {
+      if (this.windGain) this.windGain.gain.setValueAtTime(0, this.ctx.currentTime);
+      this.audioPlayer.pause();
+    }
+    return this.isMuted;
+  }
+
+  vibrateDevice(ms = 25) {
+    if (navigator.vibrate) navigator.vibrate(ms);
+  }
+}
+
+const audio = new AudioEngine();
+audio.audioPlayer.addEventListener('play', () => updateAyahPlayerButton(true));
+audio.audioPlayer.addEventListener('ended', () => updateAyahPlayerButton(false));
+audio.audioPlayer.addEventListener('pause', () => updateAyahPlayerButton(false));
+
+/* ==========================================================
+   2. محتوى الدرس المعتمد من الكتاب المدرسي (صفحة 106 - 109)
+   ========================================================== */
+const LESSON_AYAHS = [
+  {
+    text: '﴿أَلَمْ تَرَ كَيْفَ ضَرَبَ اللَّهُ مَثَلًا كَلِمَةً طَيِّبَةً كَشَجَرَةٍ طَيِّبَةٍ أَصْلُهَا ثَابِتٌ وَفَرْعُهَا فِي السَّمَاءِ﴾',
+    ayahNum: 24,
+    recitationIdx: 0
+  },
+  {
+    text: '﴿تُؤْتِي أُكُلَهَا كُلَّ حِينٍ بِإِذْنِ رَبِّهَا ۗ وَيَضْرِبُ اللَّهُ الْأَمْثَالَ لِلنَّاسِ لَعَلَّهُمْ يَتَذَكَّرُونَ﴾',
+    ayahNum: 25,
+    recitationIdx: 1
+  },
+  {
+    text: '﴿وَمَثَلُ كَلِمَةٍ خَبِيثَةٍ كَشَجَرَةٍ خَبِيثَةٍ اجْتُثَّتْ مِنْ فَوْقِ الْأَرْضِ مَا لَهَا مِنْ قَرَارٍ﴾',
+    ayahNum: 26,
+    recitationIdx: 2
+  }
+];
+
+const TAFSIR_PARTS = {
+  roots: {
+    label: 'أصلها ثابت',
+    symbol: 'جذور الشجرة الراسخة',
+    meaning: 'رسوخ كلمة التوحيد (لا إله إلا الله) واليقين في قلب المؤمن، فلا تزعزعه الشبهات ولا الفتن.',
+    pos: new THREE.Vector3(0, 0.18, 0.45)
+  },
+  branch: {
+    label: 'فرعها في السماء',
+    symbol: 'الساق والسعف الشامخ',
+    meaning: 'القول الطيب والعمل الصالح والأخلاق الرضية تصعد إلى الله تعالى آناء الليل وأطراف النهار.',
+    pos: new THREE.Vector3(0, 2.8, 0.1)
+  },
+  fruit: {
+    label: 'تؤتي أكلها كل حين',
+    symbol: 'ثمار الشجرة المتجددة',
+    meaning: 'كثرة النفع وثمر الخير المتجدد الذي يقدمه المؤمن للناس في كل وقت بإذن الله ومشيئته.',
+    // مركز تقريبي لكتلة التفاح الفعلية في تاج الشجرة.
+    pos: new THREE.Vector3(0.05, 1.98, 0.9)
+  }
+};
+
+const STATE = {
+  stage: 0,
+  viewMode: 'screen',
+  predictionChoice: null,
+  exploredParts: new Set(),
+  highlightedPart: null,
+  currentTree: 'good',
+  windLevel: 0,
+  goodWithstood: false,
+  badUprooted: false,
+  matchingAnswers: {},
+  matchScore: 0
+};
+
+/* ==========================================================
+   3. مشهد Three.js ثلاثي الأبعاد وإعداده
+   ========================================================== */
+const canvas = document.getElementById('canvas-3d');
+const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.xr.enabled = true;
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(36, window.innerWidth / window.innerHeight, 0.1, 60);
+
+// إضاءة سينمائية دافئة
+scene.add(new THREE.HemisphereLight(0xfff5dd, 0x182c22, 1.05));
+const sun = new THREE.DirectionalLight(0xffeed0, 1.35);
+sun.position.set(4, 8, 5);
+sun.castShadow = true;
+scene.add(sun);
+
+const rimLight = new THREE.DirectionalLight(0x52b788, 0.4);
+rimLight.position.set(-4, 3, -4);
+scene.add(rimLight);
+
+const worldGroup = new THREE.Group();
+scene.add(worldGroup);
+
+/* ==========================================================
+   4. مشهد الشجرة التعليمية ثلاثي الأبعاد
+   ========================================================== */
+const pickableMeshes = [];
+function markPickable(mesh, partName) {
+  mesh.userData.part = partName;
+  pickableMeshes.push(mesh);
+  return mesh;
+}
+
+// خامات طبيعية واقعية
+const barkMat = new THREE.MeshStandardMaterial({ color: 0x694e33, roughness: 0.88, metalness: 0.05 });
+const fiberMat = new THREE.MeshStandardMaterial({ color: 0x4d3722, roughness: 0.95 });
+const frondSpineMat = new THREE.MeshStandardMaterial({ color: 0x3d824d, roughness: 0.7 });
+const frondLeafMat = new THREE.MeshStandardMaterial({ color: 0x2e8549, roughness: 0.55, side: THREE.DoubleSide });
+const frondYoungMat = new THREE.MeshStandardMaterial({ color: 0x48a85e, roughness: 0.5, side: THREE.DoubleSide });
+const rootMat = new THREE.MeshStandardMaterial({ color: 0x5c3c20, roughness: 0.92 });
+const dateFruitMat = new THREE.MeshStandardMaterial({ color: 0xd97706, roughness: 0.4, metalness: 0.15 });
+
+// 1. قاعدة الأرض ومقطع التربة الشفاف (يبرز الجذور بوضوح)
+const groundBaseGroup = new THREE.Group();
+worldGroup.add(groundBaseGroup);
+groundBaseGroup.visible = false;
+
+const surfacePedestal = new THREE.Mesh(
+  new THREE.CylinderGeometry(1.3, 1.35, 0.04, 36),
+  new THREE.MeshStandardMaterial({ color: 0xc8b282, roughness: 0.9 })
+);
+surfacePedestal.position.y = 0.01;
+groundBaseGroup.add(surfacePedestal);
+surfacePedestal.visible = false;
+
+const soilCut = new THREE.Mesh(
+  new THREE.CylinderGeometry(1.3, 1.28, 0.95, 36, 1, true),
+  new THREE.MeshStandardMaterial({ color: 0x3d2716, roughness: 0.95, transparent: true, opacity: 0.38, side: THREE.DoubleSide })
+);
+soilCut.position.y = -0.47;
+groundBaseGroup.add(soilCut);
+
+const soilBottom = new THREE.Mesh(
+  new THREE.CircleGeometry(1.28, 36),
+  new THREE.MeshStandardMaterial({ color: 0x24160c, roughness: 0.95 })
+);
+soilBottom.rotation.x = Math.PI / 2;
+soilBottom.position.y = -0.95;
+groundBaseGroup.add(soilBottom);
+
+// 2. الشجرة الطيبة
+const palmGroup = new THREE.Group();
+worldGroup.add(palmGroup);
+palmGroup.visible = false;
+// الشجرة المحدثة هي المجسم الوحيد لهذا الدرس؛ نخفي عناصر النمذجة القديمة عند اكتمال تحميله.
+let loadedTreeModel = null;
+const goodTreeMeshes = [];
+let lessonFruitGroup = null;
+let fruitGrowth = 0;
+const treeRootPosition = new THREE.Vector3();
+const treeModelLoader = new THREE.GLTFLoader();
+function loadTreeAsset() {
+  const file = 'assets/models/low_poly_tree.glb';
+  const onLoaded = (gltf) => {
+    if (loadedTreeModel) palmGroup.remove(loadedTreeModel);
+    const model = gltf.scene;
+    // ملف GLB نفسه يحتوي طبقات التاج النباتي في عدة meshes؛ لا نستبعد أجزاءً بالاسم التخَميني.
+    const treeMeshes = [];
+    model.traverse((node) => {
+      if (!node.isMesh) return;
+      node.visible = !/axe|fungus|mushroom|stump|Plane\.336/i.test(node.name);
+      const materials = Array.isArray(node.material) ? node.material : [node.material];
+      if (materials.some((material) => material.alphaTest > 0 || material.transparent)) {
+        materials.forEach((material) => {
+          material.side = THREE.DoubleSide;
+          if (material.alphaTest > 0) material.alphaTest = 0.12;
+          material.needsUpdate = true;
+        });
+      }
+      node.castShadow = true; node.receiveShadow = true;
+      if (node.visible) treeMeshes.push(node);
+      if (node.visible && /Trunk_Material|Plane\.1065|Plane\.547/i.test(node.name)) goodTreeMeshes.push(node);
+    });
+    model.updateMatrixWorld(true);
+    const bounds = new THREE.Box3();
+    treeMeshes.forEach((mesh) => bounds.union(new THREE.Box3().setFromObject(mesh)));
+    const size = bounds.getSize(new THREE.Vector3());
+    const center = bounds.getCenter(new THREE.Vector3());
+    const trunkMesh = treeMeshes.find((mesh) => /Trunk_Material/i.test(mesh.name));
+    const trunkBounds = trunkMesh ? new THREE.Box3().setFromObject(trunkMesh) : bounds;
+    const modelScale = 3.55 / Math.max(size.y, 0.001);
+    model.scale.setScalar(modelScale);
+    model.position.set(-center.x * modelScale, -bounds.min.y * modelScale, -center.z * modelScale);
+    treeRootPosition.set(
+      (trunkBounds.min.x + trunkBounds.max.x) * 0.5 * modelScale + model.position.x,
+      trunkBounds.min.y * modelScale + model.position.y,
+      (trunkBounds.min.z + trunkBounds.max.z) * 0.5 * modelScale + model.position.z
+    );
+    loadedTreeModel = model; palmGroup.add(model);
+    palmGroup.visible = true;
+    palmGroup.children.forEach((child) => { child.visible = child === model; });
+    groundBaseGroup.visible = true;
+    badTree.visible = false;
+    pickableMeshes.length = 0;
+    const hotspotMaterial = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false });
+    [
+      ['roots', 0.24, 0.52],
+      ['branch', 1.55, 0.44],
+      ['fruit', 2.85, 0.62]
+    ].forEach(([part, y, radius]) => {
+      const hotspot = new THREE.Mesh(new THREE.SphereGeometry(radius, 12, 10), hotspotMaterial);
+      hotspot.position.set(treeRootPosition.x, treeRootPosition.y + y, treeRootPosition.z);
+      markPickable(hotspot, part);
+      palmGroup.add(hotspot);
+    });
+    buildLessonRoots();
+    buildLessonFruits();
+    badTree.position.copy(treeRootPosition);
+    badTree.scale.setScalar(2.25);
+    setTreePresentation(STATE.currentTree);
+    handleResize();
+    triggerPill('تم تحميل الشجرة التعليمية');
+  };
+  const onError = (error) => {
+    console.error('تعذر تحميل أصل GLB:', file, error);
+    palmGroup.visible = false;
+    triggerPill('تعذر تحميل ملف الشجرة؛ تحقق من فتح الدرس عبر الخادم أو من مسار الملف');
+  };
+  if (window.location.protocol === 'file:' && window.LOW_POLY_TREE_GLB_BASE64) {
+    try {
+      const raw = atob(window.LOW_POLY_TREE_GLB_BASE64);
+      const bytes = new Uint8Array(raw.length);
+      for (let i = 0; i < raw.length; i++) bytes[i] = raw.charCodeAt(i);
+      treeModelLoader.parse(bytes.buffer, '', onLoaded, onError);
+    } catch (error) { onError(error); }
+    return;
+  }
+  treeModelLoader.load(file, onLoaded, undefined, onError);
+}
+
+function buildLessonRoots() {
+  const rootsGroup = new THREE.Group();
+  rootsGroup.position.copy(treeRootPosition);
+  const directions = 14;
+  for (let i = 0; i < directions; i++) {
+    const angle = i / directions * Math.PI * 2;
+    const reach = 0.46 + (i % 4) * 0.12;
+    const depth = 0.48 + (i % 3) * 0.13;
+    const curve = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(0, 0.02, 0),
+      new THREE.Vector3(Math.cos(angle) * reach * 0.25, -depth * 0.18, Math.sin(angle) * reach * 0.25),
+      new THREE.Vector3(Math.cos(angle) * reach * 0.72, -depth * 0.62, Math.sin(angle) * reach * 0.72),
+      new THREE.Vector3(Math.cos(angle) * reach, -depth, Math.sin(angle) * reach)
+    ]);
+    const root = new THREE.Mesh(new THREE.TubeGeometry(curve, 14, i % 3 ? 0.025 : 0.038, 6, false), rootMat);
+    root.castShadow = true; root.receiveShadow = true; root.userData.part = 'roots';
+    rootsGroup.add(root); pickableMeshes.push(root);
+  }
+  palmGroup.add(rootsGroup);
+  groundBaseGroup.position.set(treeRootPosition.x, treeRootPosition.y, treeRootPosition.z);
+  groundBaseGroup.scale.setScalar(0.52);
+  groundBaseGroup.visible = true;
+}
+
+function buildLessonFruits() {
+  lessonFruitGroup = new THREE.Group();
+  lessonFruitGroup.position.set(treeRootPosition.x, 0, treeRootPosition.z);
+  const appleMats = [0xd83d32, 0xc42f2a, 0xe34b38].map((color) => new THREE.MeshStandardMaterial({ color, roughness: 0.43 }));
+  const stemMat = new THREE.MeshStandardMaterial({ color: 0x624223, roughness: 0.9 });
+  const leafMat = new THREE.MeshStandardMaterial({ color: 0x4c9a47, roughness: 0.7, side: THREE.DoubleSide });
+  const appleGeo = new THREE.SphereGeometry(0.105, 16, 12);
+  const stemGeo = new THREE.CylinderGeometry(0.01, 0.014, 0.06, 6);
+  const leafGeo = new THREE.SphereGeometry(0.046, 8, 6);
+  // مواضع الثمار داخل كتلة التاج وعلى جهته المواجهة للطالب، لا فوق قمة الشجرة.
+  const clusters = [
+    [-0.48, 1.78, 0.92], [0.20, 2.18, 0.96], [0.55, 1.86, 0.86]
+  ];
+  clusters.forEach(([cx, cy, cz], ci) => {
+    for (let i = 0; i < 5; i++) {
+      const angle = i * 2.4 + ci * 0.7;
+      const apple = new THREE.Mesh(appleGeo, appleMats[(i + ci) % appleMats.length]);
+      apple.position.set(cx + Math.cos(angle) * 0.15, cy - (i % 3) * 0.12, cz + Math.sin(angle) * 0.07);
+      apple.scale.set(1, 1.12, 1);
+      apple.castShadow = true; apple.userData.part = 'fruit';
+      const stem = new THREE.Mesh(stemGeo, stemMat); stem.position.y = 0.087; apple.add(stem);
+      const leaf = new THREE.Mesh(leafGeo, leafMat); leaf.scale.set(1.1, 0.32, 0.55); leaf.position.set(0.035, 0.12, 0); leaf.rotation.z = -0.45; apple.add(leaf);
+      apple.scale.setScalar(0.001);
+      lessonFruitGroup.add(apple); allDates.push(apple); pickableMeshes.push(apple);
+    }
+  });
+  palmGroup.add(lessonFruitGroup);
+}
+
+function setTreePresentation(treeType) {
+  const isGood = treeType === 'good';
+  palmGroup.visible = isGood && Boolean(loadedTreeModel);
+  badTree.visible = !isGood;
+  groundBaseGroup.visible = true;
+  if (lessonFruitGroup) lessonFruitGroup.visible = isGood;
+}
+
+loadTreeAsset();
+
+// الجذور العميقة الراسخة (أصلها ثابت)
+const palmRoots = new THREE.Group();
+(function buildRoots() {
+  const rootCount = 14;
+  for (let i = 0; i < rootCount; i++) {
+    const angle = (i / rootCount) * Math.PI * 2 + (i % 3) * 0.22;
+    const spread = 0.42 + (i % 5) * 0.14;
+    const depth = 0.65 + (i % 4) * 0.14;
+    const x = Math.cos(angle) * spread;
+    const z = Math.sin(angle) * spread;
+
+    const path = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(0, 0.02, 0),
+      new THREE.Vector3(x * 0.25, -depth * 0.28, z * 0.25),
+      new THREE.Vector3(x * 0.65, -depth * 0.65, z * 0.65),
+      new THREE.Vector3(x, -depth, z)
+    ]);
+    const geom = new THREE.TubeGeometry(path, 12, 0.038 - (i % 3) * 0.007, 6, false);
+    palmRoots.add(markPickable(new THREE.Mesh(geom, rootMat), 'roots'));
+  }
+  // وتد عميق رئيسي
+  const tapPath = new THREE.CatmullRomCurve3([
+    new THREE.Vector3(0, 0.02, 0),
+    new THREE.Vector3(0.02, -0.42, -0.02),
+    new THREE.Vector3(-0.02, -0.88, 0.01)
+  ]);
+  palmRoots.add(markPickable(new THREE.Mesh(new THREE.TubeGeometry(tapPath, 14, 0.065, 8, false), rootMat), 'roots'));
+})();
+palmGroup.add(palmRoots);
+
+// جذع الشجرة (متناسق الطول)
+const TRUNK_H = 2.15;
+const trunkGroup = new THREE.Group();
+(function buildTrunk() {
+  const geom = new THREE.CylinderGeometry(0.12, 0.19, TRUNK_H, 16, 14);
+  const pos = geom.attributes.position;
+  for (let i = 0; i < pos.count; i++) {
+    const yNorm = (pos.getY(i) + TRUNK_H / 2) / TRUNK_H;
+    pos.setX(i, pos.getX(i) + 0.10 * Math.pow(yNorm, 1.6));
+  }
+  geom.computeVertexNormals();
+
+  const trunkMesh = markPickable(new THREE.Mesh(geom, barkMat), 'branch');
+  trunkMesh.position.y = TRUNK_H / 2;
+  trunkMesh.castShadow = true;
+  trunkGroup.add(trunkMesh);
+
+  // كرب النخل (حلقات الجذع)
+  for (let y = 0.18; y < TRUNK_H - 0.08; y += 0.13) {
+    const k = y / TRUNK_H;
+    const r = 0.19 - 0.07 * k;
+    const ring = markPickable(new THREE.Mesh(new THREE.TorusGeometry(r, 0.012, 6, 16), barkMat), 'branch');
+    ring.rotation.x = Math.PI / 2;
+    ring.position.set(0.10 * Math.pow(k, 1.6), y, 0);
+    trunkGroup.add(ring);
+  }
+
+  // طوق ليف النخل أعلى الجذع
+  const collar = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.13, 0.22, 14), fiberMat);
+  collar.position.set(0.10, TRUNK_H - 0.04, 0);
+  trunkGroup.add(collar);
+})();
+palmGroup.add(trunkGroup);
+
+// أغصان الشجرة وأوراقها
+const palmCrown = new THREE.Group();
+palmCrown.position.set(0.10, TRUNK_H + 0.04, 0);
+palmGroup.add(palmCrown);
+
+// خوارزمية بناء غصن شجرة ثلاثي الأبعاد ثلاثية الأبعاد
+function createLushFrond(length, droop, width, mat) {
+  const frondObj = new THREE.Group();
+  const segs = 16;
+  const positions = [];
+  const indices = [];
+
+  for (let i = 0; i <= segs; i++) {
+    const t = i / segs;
+    const x = t * length;
+    const y = Math.sin(t * 1.5) * (length * 0.20) - droop * (t * t) * length;
+    let w = width * Math.sin(t * Math.PI) * (1.0 - 0.25 * t);
+    if (t < 0.12) w = width * (t / 0.12) * 0.15;
+
+    const spineY = y + 0.02;
+    const wingY = y - 0.014;
+
+    positions.push(x, wingY, -w);
+    positions.push(x, spineY, 0);
+    positions.push(x, wingY, w);
+  }
+
+  for (let i = 0; i < segs; i++) {
+    const b = i * 3;
+    const n = (i + 1) * 3;
+    indices.push(b, n, b + 1, b + 1, n, n + 1);
+    indices.push(b + 1, n + 1, b + 2, b + 2, n + 1, n + 2);
+  }
+
+  const geom = new THREE.BufferGeometry();
+  geom.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+  geom.setIndex(indices);
+  geom.computeVertexNormals();
+
+  const leafMesh = new THREE.Mesh(geom, mat);
+  leafMesh.castShadow = true;
+  frondObj.add(leafMesh);
+
+  // جريدة وسطى متينة
+  const spineCurve = new THREE.CatmullRomCurve3([
+    new THREE.Vector3(0, 0, 0),
+    new THREE.Vector3(length * 0.35, length * 0.16, 0),
+    new THREE.Vector3(length * 0.7, length * 0.08, 0),
+    new THREE.Vector3(length, -droop * length * 0.85, 0)
+  ]);
+  const stalk = new THREE.Mesh(new THREE.TubeGeometry(spineCurve, 12, 0.016, 5, false), frondSpineMat);
+  frondObj.add(stalk);
+
+  return frondObj;
+}
+
+const frondPivots = [];
+
+// الطبقة 1: سعف القلب (Upright) - 6 سعفات
+for (let i = 0; i < 6; i++) {
+  const p = new THREE.Group();
+  const pitch = 1.15 + (i % 2) * 0.08;
+  const rotY = (i / 6) * Math.PI * 2 + 0.2;
+  p.rotation.set(0, rotY, pitch);
+
+  const frond = createLushFrond(1.5, 0.32, 0.30, frondYoungMat);
+  markPickable(frond, 'branch');
+  p.add(frond);
+  palmCrown.add(p);
+  frondPivots.push({ pivot: p, basePitch: pitch, phase: i * 0.8 });
+}
+
+// الطبقة 2: السعف الأوسط الممتد (Arching) - 10 سعفات
+for (let i = 0; i < 10; i++) {
+  const p = new THREE.Group();
+  const pitch = 0.65 + (i % 3) * 0.1;
+  const rotY = (i / 10) * Math.PI * 2 + (i % 2) * 0.15;
+  p.rotation.set(0, rotY, pitch);
+
+  const frond = createLushFrond(1.95, 0.50, 0.38, frondLeafMat);
+  markPickable(frond, 'branch');
+  p.add(frond);
+  palmCrown.add(p);
+  frondPivots.push({ pivot: p, basePitch: pitch, phase: i * 0.65 + 1.2 });
+}
+
+// الطبقة 3: السعف السفلي المتدلي (Drooping) - 8 سعفات
+for (let i = 0; i < 8; i++) {
+  const p = new THREE.Group();
+  const pitch = 0.25 + (i % 2) * 0.08;
+  const rotY = (i / 8) * Math.PI * 2 + 0.35;
+  p.rotation.set(0, rotY, pitch);
+
+  const frond = createLushFrond(2.1, 0.78, 0.36, frondLeafMat);
+  markPickable(frond, 'branch');
+  p.add(frond);
+  palmCrown.add(p);
+  frondPivots.push({ pivot: p, basePitch: pitch, phase: i * 0.7 + 2.4 });
+}
+
+// عراجين الرطب (تؤتي أكلها كل حين)
+const allDates = [];
+for (let c = 0; c < 4; c++) {
+  const cluster = new THREE.Group();
+  const angle = c * (Math.PI / 2) + 0.4;
+  cluster.position.set(Math.cos(angle) * 0.13, -0.05, Math.sin(angle) * 0.13);
+
+  const stalkCurve = new THREE.CatmullRomCurve3([
+    new THREE.Vector3(0, 0, 0),
+    new THREE.Vector3(Math.cos(angle) * 0.14, -0.10, Math.sin(angle) * 0.14),
+    new THREE.Vector3(Math.cos(angle) * 0.22, -0.32, Math.sin(angle) * 0.22)
+  ]);
+  cluster.add(new THREE.Mesh(new THREE.TubeGeometry(stalkCurve, 10, 0.014, 5, false), frondSpineMat));
+
+  for (let k = 0; k < 16; k++) {
+    const dateMesh = markPickable(
+      new THREE.Mesh(new THREE.SphereGeometry(0.040, 8, 8), dateFruitMat),
+      'fruit'
+    );
+    const subAngle = k * 2.1;
+    const spread = 0.035 + (k % 4) * 0.022;
+    const yPos = -0.15 - (k / 16) * 0.28;
+    dateMesh.position.set(
+      Math.cos(subAngle) * spread + Math.cos(angle) * 0.18,
+      yPos,
+      Math.sin(subAngle) * spread + Math.sin(angle) * 0.18
+    );
+    dateMesh.scale.set(0.85, 1.35, 0.85);
+    cluster.add(dateMesh);
+    allDates.push(dateMesh);
+  }
+  palmCrown.add(cluster);
+}
+allDates.forEach(d => d.scale.setScalar(0.001));
+
+// 3. الشجرة الخبيثة (شجيرة شوكية بجذور سطحية)
+const badTree = new THREE.Group();
+worldGroup.add(badTree);
+badTree.visible = false;
+badTree.scale.setScalar(1.12);
+
+(function buildBadTree() {
+  const dryBark = new THREE.MeshStandardMaterial({ color: 0x5a4836, roughness: 0.95 });
+  const dryThorn = new THREE.MeshStandardMaterial({ color: 0x7a6c58, roughness: 0.7 });
+  const badFruit = new THREE.MeshStandardMaterial({ color: 0x9b7838, roughness: 0.82 });
+  const dryLeafMats = [0x596944, 0x6f754a, 0x82764d].map(color =>
+    new THREE.MeshStandardMaterial({ color, roughness: 0.92 })
+  );
+  const dryLeafGeometry = new THREE.SphereGeometry(1, 10, 8);
+
+  const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.075, 1.0, 10), dryBark);
+  trunk.position.y = 0.48;
+  trunk.rotation.z = 0.14;
+  badTree.add(trunk);
+
+  for (let i = 0; i < 8; i++) {
+    const angle = (i / 8) * Math.PI * 2;
+    const branch = new THREE.Group();
+    branch.position.set(0, 0.36 + (i % 4) * 0.12, 0);
+    branch.rotation.set(0.1 * (i % 2), angle, 0.85 + (i % 3) * 0.18);
+
+    const bMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.028, 0.65, 6), dryBark);
+    bMesh.position.y = 0.32;
+    branch.add(bMesh);
+
+    for (let s = 0; s < 4; s++) {
+      const th = new THREE.Mesh(new THREE.ConeGeometry(0.012, 0.07, 4), dryThorn);
+      th.position.set(0.022, 0.12 + s * 0.12, 0);
+      th.rotation.z = -1.3;
+      branch.add(th);
+    }
+    // أوراق قليلة بألوان ترابية تعطي الشجيرة كتلتها من دون مظهر الكرات الصفراء.
+    for (let leafIndex = 0; leafIndex < 3; leafIndex++) {
+      const leaf = new THREE.Mesh(dryLeafGeometry, dryLeafMats[(i + leafIndex) % dryLeafMats.length]);
+      leaf.scale.set(0.15, 0.075, 0.1);
+      leaf.position.set((leafIndex - 1) * 0.1, 0.48 + (leafIndex % 2) * 0.13, leafIndex % 2 ? 0.08 : -0.08);
+      branch.add(leaf);
+    }
+    if (i % 2 === 0) {
+      const colocynth = new THREE.Mesh(new THREE.SphereGeometry(0.048, 10, 8), badFruit);
+      colocynth.position.set(0, 0.60, 0);
+      colocynth.scale.set(0.88, 1.1, 0.88);
+      branch.add(colocynth);
+    }
+    badTree.add(branch);
+  }
+
+  // جذور سطحية هزيلة
+  for (let r = 0; r < 7; r++) {
+    const angle = (r / 7) * Math.PI * 2;
+    const reach = 0.32 + (r % 3) * 0.07;
+    const curve = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(0, 0.01, 0),
+      new THREE.Vector3(Math.cos(angle) * (reach * 0.5), -0.035, Math.sin(angle) * (reach * 0.5)),
+      new THREE.Vector3(Math.cos(angle) * reach, -0.08, Math.sin(angle) * reach)
+    ]);
+    badTree.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 8, 0.018, 5, false), dryBark));
+  }
+})();
+
+// خطوط الرياح الانسيابية
+const windLines = [];
+const windLineMat = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0 });
+for (let i = 0; i < 24; i++) {
+  const g = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0), new THREE.Vector3(1.0,0,0)]);
+  const l = new THREE.Line(g, windLineMat);
+  l.position.set(-3.5 + Math.random() * 7, 0.1 + Math.random() * 3.5, -1 + Math.random() * 2);
+  l.userData = { speed: 1.4 + Math.random() * 1.6 };
+  scene.add(l);
+  windLines.push(l);
+}
+
+/* ==========================================================
+   5. إدارة الكاميرا، التفاعل باللمس، والتكبير والتدوير
+   ========================================================== */
+const raycaster = new THREE.Raycaster();
+const pointerNDC = new THREE.Vector2();
+let isPointerDragging = false, lastPointerX = 0, lastPointerY = 0;
+let userZoomFactor = 1.0;
+let pinchStartDist = 0;
+
+canvas.addEventListener('pointerdown', e => {
+  isPointerDragging = true;
+  lastPointerX = e.clientX;
+  lastPointerY = e.clientY;
+  audio.ensureContext();
+});
+
+canvas.addEventListener('pointermove', e => {
+  if (!isPointerDragging) return;
+  const dx = e.clientX - lastPointerX;
+  const dy = e.clientY - lastPointerY;
+  lastPointerX = e.clientX;
+  lastPointerY = e.clientY;
+
+  worldGroup.rotation.y += dx * 0.008;
+  worldGroup.rotation.x = Math.max(-0.25, Math.min(0.35, worldGroup.rotation.x + dy * 0.005));
+});
+
+canvas.addEventListener('pointerup', e => {
+  isPointerDragging = false;
+  pointerNDC.x = (e.clientX / window.innerWidth) * 2 - 1;
+  pointerNDC.y = -(e.clientY / window.innerHeight) * 2 + 1;
+  raycaster.setFromCamera(pointerNDC, camera);
+
+  if (STATE.stage === 1 && palmGroup.visible) {
+    const hits = raycaster.intersectObjects(pickableMeshes.filter(m => m.visible), true);
+    if (hits.length > 0) {
+      let obj = hits[0].object;
+      while (obj && !obj.userData.part && obj.parent) obj = obj.parent;
+      if (obj && obj.userData.part) {
+        selectTafsirPart(obj.userData.part);
+      }
+    }
+  }
+});
+
+// تكبير وتصغير سلس بعجلة الفأرة
+canvas.addEventListener('wheel', e => {
+  e.preventDefault();
+  const zoomDelta = e.deltaY * 0.001;
+  userZoomFactor = Math.max(0.65, Math.min(1.8, userZoomFactor + zoomDelta));
+  handleResize();
+}, { passive: false });
+
+// دعم اللمس المتعدد (Pinch-to-zoom) على الجوال
+canvas.addEventListener('touchstart', e => {
+  if (e.touches.length === 2) {
+    pinchStartDist = Math.hypot(
+      e.touches[0].clientX - e.touches[1].clientX,
+      e.touches[0].clientY - e.touches[1].clientY
+    );
+  }
+}, { passive: true });
+
+canvas.addEventListener('touchmove', e => {
+  if (e.touches.length === 2 && pinchStartDist > 0) {
+    const dist = Math.hypot(
+      e.touches[0].clientX - e.touches[1].clientX,
+      e.touches[0].clientY - e.touches[1].clientY
+    );
+    const ratio = pinchStartDist / dist;
+    userZoomFactor = Math.max(0.65, Math.min(1.8, userZoomFactor * (1 + (ratio - 1) * 0.05)));
+    pinchStartDist = dist;
+    handleResize();
+  }
+}, { passive: true });
+
+function selectTafsirPart(partName) {
+  STATE.highlightedPart = partName;
+  STATE.exploredParts.add(partName);
+  if (partName === 'fruit') {
+    audio.playAyahRecitation(1);
+    triggerPill('تلاوة الآية 25: ﴿تؤتي أكلها كل حين بإذن ربها﴾');
+  } else {
+    audio.playTone(620, 'triangle');
+  }
+  audio.vibrateDevice(25);
+
+  if (partName === 'fruit') {
+    fruitGrowth = 1;
+  }
+
+  document.querySelectorAll('.spatial-pin').forEach(pin => {
+    pin.classList.toggle('active', pin.dataset.part === partName);
+  });
+
+  renderSheet();
+  updateNextButtonStatus();
+}
+
+const tempPinVec = new THREE.Vector3();
+function updateSpatialPins() {
+  if (STATE.stage !== 1 || !palmGroup.visible) {
+    document.querySelectorAll('.spatial-pin').forEach(p => p.style.display = 'none');
+    return;
+  }
+
+  Object.entries(TAFSIR_PARTS).forEach(([key, info]) => {
+    const pinEl = document.getElementById(`pin-${key}`);
+    if (!pinEl) return;
+
+    tempPinVec.copy(info.pos);
+    tempPinVec.applyMatrix4(worldGroup.matrixWorld);
+    tempPinVec.project(camera);
+
+    if (tempPinVec.z > 1) {
+      pinEl.style.display = 'none';
+      return;
+    }
+
+    const screenX = (tempPinVec.x * 0.5 + 0.5) * window.innerWidth;
+    const screenY = (-tempPinVec.y * 0.5 + 0.5) * window.innerHeight;
+
+    pinEl.style.display = 'flex';
+    pinEl.style.left = `${screenX}px`;
+    pinEl.style.top = `${screenY}px`;
+  });
+}
+
+document.querySelectorAll('.spatial-pin').forEach(pin => {
+  pin.addEventListener('click', () => selectTafsirPart(pin.dataset.part));
+});
+
+/* ==========================================================
+   6. مراحل الدرس التربوية (التنبؤ -> الاستكشاف -> الريح -> الاسترجاع)
+   ========================================================== */
+const STAGES = [
+  {
+    title: 'التنبؤ والاستهلال',
+    ayahIndex: 0,
+    render: () => `
+      <div class="card-box" style="margin-bottom: 4px;">
+        <h4>أستهل: ما فائدة ضرب الأمثال في القرآن؟</h4>
+        <p>تقريب المعاني الغائبة بالأمثال المحسوسة المشاهدة ليتذكر الناس ويعتبروا.</p>
+      </div>
+      <p style="font-size: 13px; margin-bottom: 4px;">
+        في نظرك، ما الذي يمنح الشجرة ثباتاً راسخاً في وجه الرياح العاتية؟
+      </p>
+      <div class="grid-choices">
+        <button class="btn ${STATE.predictionChoice === 'roots' ? 'selected' : ''}" onclick="pickPrediction('roots')">الجذور العميقة</button>
+        <button class="btn ${STATE.predictionChoice === 'leaves' ? 'selected' : ''}" onclick="pickPrediction('leaves')">الأوراق الكثيفة</button>
+        <button class="btn ${STATE.predictionChoice === 'height' ? 'selected' : ''}" onclick="pickPrediction('height')">الارتفاع الشاهق</button>
+      </div>
+    `,
+    canAdvance: () => STATE.predictionChoice !== null
+  },
+  {
+    title: 'استكشاف معاني المثل',
+    ayahIndex: 0,
+    render: () => {
+      const active = STATE.highlightedPart ? TAFSIR_PARTS[STATE.highlightedPart] : null;
+      return `
+        <p style="font-size: 12.5px; color: var(--text-muted); margin-bottom: 4px;">
+          المس الشجرة أو انقر الملصقات العائمة لربط أجزاء المجسم بالتفسير المعتمد (صفحة 107):
+        </p>
+        <div class="grid-choices" style="margin-bottom: 4px;">
+          ${Object.entries(TAFSIR_PARTS).map(([k, v]) => `
+            <button class="btn ${STATE.highlightedPart === k ? 'selected' : ''}" onclick="selectTafsirPart('${k}')">
+              ${v.label} ${STATE.exploredParts.has(k) ? '✓' : ''}
+            </button>
+          `).join('')}
+        </div>
+        ${active ? `
+          <div class="card-box">
+            <h4>${active.label} (${active.symbol})</h4>
+            <p>${active.meaning}</p>
+          </div>
+        ` : `
+          <div class="card-box" style="text-align: center; color: var(--text-muted);">
+            استكشف أجزاء الشجرة الثلاثة لتفعيل التالي. (${STATE.exploredParts.size}/3)
+          </div>
+        `}
+      `;
+    },
+    canAdvance: () => STATE.exploredParts.size >= 3
+  },
+  {
+    title: 'اختبار الريح والعاصفة',
+    ayahIndex: 2,
+    render: () => `
+      <div style="display: flex; gap: 6px; margin-bottom: 6px;">
+        <button class="btn ${STATE.currentTree === 'good' ? 'selected' : ''}" onclick="toggleTree('good')">الكلمة الطيبة (شجرة)</button>
+        <button class="btn ${STATE.currentTree === 'bad' ? 'selected' : ''}" onclick="toggleTree('bad')">الكلمة الخبيثة (حنظل)</button>
+      </div>
+
+      <div class="slider-panel">
+        <div class="slider-label-row">
+          <span>قوة الرياح:</span>
+          <b id="wind-text" style="color: var(--gold);">${Math.round(STATE.windLevel * 100)}%</b>
+        </div>
+        <input type="range" min="0" max="100" value="${Math.round(STATE.windLevel * 100)}" oninput="changeWind(this.value)">
+      </div>
+
+      <div class="card-box" id="wind-status-box">
+        ${getWindResultText()}
+      </div>
+    `,
+    canAdvance: () => STATE.goodWithstood && STATE.badUprooted
+  },
+  {
+    title: 'الاسترجاع النشط والتدبر',
+    ayahIndex: 1,
+    render: () => `
+      <p style="font-size: 12.5px; margin-bottom: 4px;">
+        طابق بين مفردات الدرس ومعانيها بحسب جدول الكتاب المدرسي (صفحة 108):
+      </p>
+      <div class="matching-list">
+        <div class="match-item">
+          <span class="item-term">كلمة طيبة</span>
+          <select class="item-select" onchange="matchTerm('goodWord', this.value)">
+            <option value="">اختر المعنى...</option>
+            <option value="tawheed" ${STATE.matchingAnswers.goodWord === 'tawheed' ? 'selected' : ''}>كلمة التوحيد (لا إله إلا الله)</option>
+            <option value="shirk" ${STATE.matchingAnswers.goodWord === 'shirk' ? 'selected' : ''}>كلمة الشرك والكفر</option>
+            <option value="uprooted" ${STATE.matchingAnswers.goodWord === 'uprooted' ? 'selected' : ''}>اقتُلعت من جذورها</option>
+          </select>
+        </div>
+
+        <div class="match-item">
+          <span class="item-term">كلمة خبيثة</span>
+          <select class="item-select" onchange="matchTerm('badWord', this.value)">
+            <option value="">اختر المعنى...</option>
+            <option value="tawheed" ${STATE.matchingAnswers.badWord === 'tawheed' ? 'selected' : ''}>كلمة التوحيد (لا إله إلا الله)</option>
+            <option value="shirk" ${STATE.matchingAnswers.badWord === 'shirk' ? 'selected' : ''}>كلمة الشرك والكفر</option>
+            <option value="uprooted" ${STATE.matchingAnswers.badWord === 'uprooted' ? 'selected' : ''}>اقتُلعت من جذورها</option>
+          </select>
+        </div>
+
+        <div class="match-item">
+          <span class="item-term">اجتثت</span>
+          <select class="item-select" onchange="matchTerm('uproot', this.value)">
+            <option value="">اختر المعنى...</option>
+            <option value="tawheed" ${STATE.matchingAnswers.uproot === 'tawheed' ? 'selected' : ''}>كلمة التوحيد (لا إله إلا الله)</option>
+            <option value="shirk" ${STATE.matchingAnswers.uproot === 'shirk' ? 'selected' : ''}>كلمة الشرك والكفر</option>
+            <option value="uprooted" ${STATE.matchingAnswers.uproot === 'uprooted' ? 'selected' : ''}>اقتُلعت من جذورها</option>
+          </select>
+        </div>
+      </div>
+      <div id="match-verdict" style="text-align: center; font-weight: 700; color: var(--gold); margin-top: 3px; font-size: 12.5px;"></div>
+    `,
+    canAdvance: () => STATE.matchScore === 3
+  }
+];
+
+window.pickPrediction = (choice) => {
+  STATE.predictionChoice = choice;
+  audio.playTone(560, 'sine');
+  audio.vibrateDevice(20);
+  renderSheet();
+  updateNextButtonStatus();
+};
+
+window.selectTafsirPart = selectTafsirPart;
+
+window.toggleTree = (treeType) => {
+  STATE.currentTree = treeType;
+  STATE.windLevel = 0;
+  STATE.badUprooted = false;
+  badFallRatio = 0;
+  audio.setWindForce(0);
+  audio.playTone(treeType === 'good' ? 520 : 380, 'triangle');
+  setTreePresentation(treeType);
+  renderSheet();
+  setTimeout(handleResize, 40);
+  updateNextButtonStatus();
+};
+
+window.changeWind = (rawVal) => {
+  const norm = rawVal / 100;
+  STATE.windLevel = norm;
+  audio.setWindForce(norm);
+  const textEl = document.getElementById('wind-text');
+  if (textEl) textEl.textContent = `${rawVal}%`;
+
+  if (STATE.currentTree === 'good' && norm >= 0.8) {
+    if (!STATE.goodWithstood) {
+      STATE.goodWithstood = true;
+      audio.playTone(750, 'sine');
+      audio.vibrateDevice([25, 35, 45]);
+    }
+  }
+
+  if (STATE.currentTree === 'bad' && norm >= 0.65) {
+    if (!STATE.badUprooted) {
+      STATE.badUprooted = true;
+      audio.playUproot();
+      audio.vibrateDevice([50, 40, 80]);
+      triggerPill('﴿اجْتُثَّتْ مِنْ فَوْقِ الْأَرْضِ مَا لَهَا مِنْ قَرَارٍ﴾');
+    }
+  }
+
+  const box = document.getElementById('wind-status-box');
+  if (box) box.innerHTML = getWindResultText();
+  updateNextButtonStatus();
+};
+
+function getWindResultText() {
+  if (STATE.currentTree === 'good') {
+    if (STATE.windLevel >= 0.8) {
+      return '<b style="color: var(--success);">ثبتت الشجرة الطيبة:</b> جذورها العميقة منحتها ثباتاً راسخاً ومرونة أمام الريح الشديدة.';
+    }
+    return 'ارفع الريح إلى 80%+ لملاحظة ثبات الشجرة الطيبة الراسخة.';
+  } else {
+    if (STATE.badUprooted) {
+      return '<b style="color: var(--danger);">اقتُلعت الشجرة الخبيثة:</b> جذورها السطحية الهزيلة لم تصمد، فطارت بلا قرار.';
+    }
+    return 'ارفع الريح إلى 65%+ لتشاهد ضعف جذور الشجرة الخبيثة واجتثاثها.';
+  }
+}
+
+window.matchTerm = (termKey, userVal) => {
+  STATE.matchingAnswers[termKey] = userVal;
+  const solutions = {
+    goodWord: 'tawheed',
+    badWord: 'shirk',
+    uproot: 'uprooted'
+  };
+
+  let count = 0;
+  Object.entries(solutions).forEach(([k, sol]) => {
+    if (STATE.matchingAnswers[k] === sol) count++;
+  });
+  STATE.matchScore = count;
+
+  if (solutions[termKey] === userVal) {
+    audio.playTone(600 + count * 60, 'sine');
+    audio.vibrateDevice(20);
+  } else {
+    audio.playTone(240, 'sawtooth');
+  }
+
+  const verdictEl = document.getElementById('match-verdict');
+  if (verdictEl) {
+    verdictEl.textContent = `نسبة الإتقان: ${Math.round((count / 3) * 100)}% (${count} من 3)`;
+    if (count === 3) {
+      verdictEl.innerHTML = '🎉 أحسنت! طابقت جميع معاني الكلمات بنجاح تام.';
+      audio.vibrateDevice([35, 35, 75]);
+    }
+  }
+  updateNextButtonStatus();
+};
+
+/* ==========================================================
+   7. إدارة الواجهة وشريط الآيات
+   ========================================================== */
+const bottomSheet = document.getElementById('bottom-sheet');
+const sheetHandle = document.getElementById('sheet-handle');
+const stageTitle = document.getElementById('stage-title');
+const sheetBody = document.getElementById('sheet-body');
+const timelineProgress = document.getElementById('timeline-progress');
+const btnNextStage = document.getElementById('btn-next-stage');
+const btnPrevStage = document.getElementById('btn-prev-stage');
+ayahTextEl = document.getElementById('ayah-text');
+btnAyahAudio = document.getElementById('btn-ayah-audio');
+const btnSound = document.getElementById('btn-sound');
+const btnCam = document.getElementById('btn-cam');
+const btnRecenter = document.getElementById('btn-recenter');
+const btnFullscreen = document.getElementById('btn-fullscreen');
+const btnInfo = document.getElementById('btn-info');
+const developerDialog = document.getElementById('developer-dialog');
+const btnCloseInfo = document.getElementById('btn-close-info');
+const statusPill = document.getElementById('status-pill');
+
+function syncFullscreenButton() {
+  const active = Boolean(document.fullscreenElement);
+  btnFullscreen.textContent = active ? '⤡' : '⤢';
+  btnFullscreen.title = active ? 'الخروج من ملء الشاشة' : 'ملء الشاشة';
+  btnFullscreen.setAttribute('aria-label', btnFullscreen.title);
+  btnFullscreen.classList.toggle('active', active);
+}
+
+btnFullscreen.addEventListener('click', async () => {
+  try {
+    if (document.fullscreenElement) await document.exitFullscreen();
+    else if (document.documentElement.requestFullscreen) await document.documentElement.requestFullscreen();
+    else { triggerPill('ملء الشاشة غير مدعوم في هذا المتصفح'); return; }
+  } catch (error) {
+    console.warn('تعذر تغيير وضع ملء الشاشة:', error);
+    triggerPill('لم يتمكن المتصفح من تشغيل ملء الشاشة');
+  }
+});
+document.addEventListener('fullscreenchange', syncFullscreenButton);
+syncFullscreenButton();
+
+function closeDeveloperDialog() {
+  developerDialog.classList.add('hidden');
+  btnInfo.focus();
+}
+btnInfo.addEventListener('click', () => {
+  developerDialog.classList.remove('hidden');
+  btnCloseInfo.focus();
+});
+btnCloseInfo.addEventListener('click', closeDeveloperDialog);
+developerDialog.addEventListener('click', event => {
+  if (event.target === developerDialog) closeDeveloperDialog();
+});
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && !developerDialog.classList.contains('hidden')) closeDeveloperDialog();
+});
+
+function triggerPill(text) {
+  statusPill.textContent = text;
+  statusPill.classList.add('show');
+  setTimeout(() => statusPill.classList.remove('show'), 3500);
+}
+
+sheetHandle.addEventListener('click', () => {
+  bottomSheet.classList.toggle('collapsed');
+  setTimeout(handleResize, 320);
+});
+
+function loadStage() {
+  const current = STAGES[STATE.stage];
+  stageTitle.textContent = current.title;
+
+  const currentAyah = LESSON_AYAHS[current.ayahIndex];
+  if (!audio.audioPlayer.paused) audio.stopAyahRecitation();
+  ayahTextEl.textContent = currentAyah.text;
+  updateAyahPlayerButton(false);
+
+  timelineProgress.querySelectorAll('span').forEach((dot, i) => {
+    dot.className = '';
+    if (i < STATE.stage) dot.classList.add('done');
+    else if (i === STATE.stage) dot.classList.add('current');
+  });
+
+  btnPrevStage.style.display = STATE.stage > 0 ? 'inline-flex' : 'none';
+  btnNextStage.textContent = STATE.stage === STAGES.length - 1 ? 'إنهاء' : 'التالي';
+
+  if (STATE.stage === 2) {
+    setTreePresentation(STATE.currentTree);
+  } else {
+    setTreePresentation(STATE.currentTree);
+  }
+
+  renderSheet();
+  updateNextButtonStatus();
+  setTimeout(handleResize, 50);
+}
+
+function renderSheet() {
+  sheetBody.innerHTML = STAGES[STATE.stage].render();
+}
+
+function updateNextButtonStatus() {
+  btnNextStage.disabled = !STAGES[STATE.stage].canAdvance();
+}
+
+btnNextStage.addEventListener('click', () => {
+  audio.ensureContext();
+  if (STATE.stage < STAGES.length - 1) {
+    STATE.stage++;
+    loadStage();
+  } else {
+    showCompletionScreen();
+  }
+});
+
+function showCompletionScreen() {
+  const completionEl = document.getElementById('completion-screen');
+  if (completionEl) {
+    completionEl.classList.remove('hidden');
+    audio.playFanfare();
+    audio.vibrateDevice([40, 50, 90, 60, 140]);
+    triggerPill('مبارك! أتممت الدرس بنجاح');
+  }
+}
+
+// بدء الدرس من شاشة التمهيد
+const btnStartIntro = document.getElementById('btn-start-intro');
+if (btnStartIntro) {
+  btnStartIntro.addEventListener('click', () => {
+    audio.ensureContext();
+    audio.playChime();
+    const introEl = document.getElementById('intro-screen');
+    if (introEl) introEl.classList.add('hidden');
+    setTimeout(handleResize, 60);
+  });
+}
+
+// إعادة الدرس من شاشة التهنئة
+const btnRestartLesson = document.getElementById('btn-restart-lesson');
+if (btnRestartLesson) {
+  btnRestartLesson.addEventListener('click', () => {
+    const completionEl = document.getElementById('completion-screen');
+    if (completionEl) completionEl.classList.add('hidden');
+    STATE.stage = 0;
+    STATE.predictionChoice = null;
+    STATE.exploredParts.clear();
+    STATE.highlightedPart = null;
+    STATE.currentTree = 'good';
+    STATE.windLevel = 0;
+    STATE.goodWithstood = false;
+    STATE.badUprooted = false;
+    STATE.matchingAnswers = {};
+    STATE.matchScore = 0;
+    worldGroup.rotation.set(0, 0, 0);
+    userZoomFactor = 1.0;
+    audio.setWindForce(0);
+    loadStage();
+    handleResize();
+    triggerPill('أُعيد بدء الدرس');
+  });
+}
+
+btnPrevStage.addEventListener('click', () => {
+  if (STATE.stage > 0) {
+    STATE.stage--;
+    loadStage();
+  }
+});
+
+btnAyahAudio.addEventListener('click', () => {
+  audio.ensureContext();
+  if (!audio.audioPlayer.paused) {
+    audio.stopAyahRecitation();
+    triggerPill('أُوقفت التلاوة');
+    return;
+  }
+  const currentStage = STAGES[STATE.stage];
+  audio.playAyahRecitation(currentStage.ayahIndex);
+  triggerPill('جارِ تلاوة الآية الكريمة...');
+});
+
+btnSound.addEventListener('click', () => {
+  const isMuted = audio.toggleSound();
+  btnSound.textContent = isMuted ? '🔇' : '🔊';
+  btnSound.classList.toggle('active', !isMuted);
+});
+
+btnRecenter.addEventListener('click', () => {
+  worldGroup.rotation.set(0, 0, 0);
+  STATE.windLevel = 0;
+  STATE.badUprooted = false;
+  userZoomFactor = 1.0;
+  audio.setWindForce(0);
+  handleResize();
+  renderSheet();
+  triggerPill('أُعيد ضبط المشهد');
+});
+
+let xrHitSource = null;
+const hitReticle = new THREE.Mesh(new THREE.RingGeometry(0.085, 0.12, 32), new THREE.MeshBasicMaterial({ color: 0xe2b04a, side: THREE.DoubleSide }));
+hitReticle.rotation.x = -Math.PI / 2; hitReticle.matrixAutoUpdate = false; hitReticle.visible = false; scene.add(hitReticle);
+btnCam.addEventListener('click', async () => {
+  if (renderer.xr.getSession()) { await renderer.xr.getSession().end(); return; }
+  if (!window.isSecureContext || !navigator.xr) { triggerPill('WebAR يحتاج Android Chrome وصفحة HTTPS؛ يمكنك متابعة العرض الثلاثي الأبعاد'); return; }
+  try {
+    if (!(await navigator.xr.isSessionSupported('immersive-ar'))) { triggerPill('WebXR AR غير مدعوم على هذا الجهاز؛ العرض الثلاثي الأبعاد متاح'); return; }
+    const session = await navigator.xr.requestSession('immersive-ar', { requiredFeatures: ['hit-test'], optionalFeatures: ['dom-overlay'], domOverlay: { root: document.body } });
+    await renderer.xr.setSession(session);
+    const localSpace = await session.requestReferenceSpace('local');
+    const viewerSpace = await session.requestReferenceSpace('viewer');
+    xrHitSource = await session.requestHitTestSource({ space: viewerSpace });
+    session.addEventListener('end', () => {
+      xrHitSource = null; hitReticle.visible = false; worldGroup.position.set(0,0,0); worldGroup.scale.setScalar(1);
+      STATE.viewMode = 'screen'; btnCam.classList.remove('active'); triggerPill('انتهت جلسة WebAR');
+    }, { once: true });
+    session.addEventListener('select', (event) => {
+      if (!hitReticle.visible) { triggerPill('وجّه الكاميرا نحو سطح مستوٍ أولاً'); return; }
+      const m = new THREE.Matrix4().fromArray(hitReticle.matrix.elements);
+      worldGroup.position.setFromMatrixPosition(m); worldGroup.position.y += 0.95; worldGroup.scale.setScalar(0.2);
+      hitReticle.visible = false; triggerPill('وُضع المجسم على السطح');
+    });
+    renderer.setAnimationLoop((time, frame) => {
+      if (frame && xrHitSource) {
+        const result = frame.getHitTestResults(xrHitSource)[0];
+        if (result) { hitReticle.visible = true; hitReticle.matrix.fromArray(result.getPose(localSpace).transform.matrix); }
+        else hitReticle.visible = false;
+      }
+      animateScene(time);
+    });
+    STATE.viewMode = 'ar'; btnCam.classList.add('active'); triggerPill('حرّك الهاتف لاكتشاف السطح، ثم المس لوضع المجسم');
+  } catch (error) { triggerPill('تعذر تشغيل WebAR؛ تحقق من الإذن ودعم hit-test'); }
+});
+
+/* ==========================================================
+   8. حلقة التحديث، الرسوم المتحركة، وضبط الكاميرا الدقيق
+   ========================================================== */
+const animClock = new THREE.Clock();
+let badFallRatio = 0;
+
+function animateScene() {
+  const delta = Math.min(animClock.getDelta(), 0.05);
+  const time = animClock.elapsedTime;
+  const wind = STATE.windLevel;
+
+  // 1. تمايل السعف بالهواء والريح
+  frondPivots.forEach(f => {
+    const sway = Math.sin(time * 2.5 + f.phase) * (0.035 + wind * 0.2);
+    f.pivot.rotation.z = f.basePitch + sway;
+  });
+
+  // 2. نمو الثمار عند استكشاف الثمر
+  const targetScale = (fruitGrowth > 0 || STATE.exploredParts.has('fruit') || STATE.stage >= 2) ? 1 : 0.001;
+  allDates.forEach((d, idx) => {
+    const current = d.scale.x;
+    const fruitTarget = STATE.currentTree === 'good' ? targetScale : 0.001;
+    d.scale.setScalar(current + (fruitTarget - current) * Math.min(1, delta * (2.2 + (idx % 5) * 0.3)));
+  });
+
+  // 3. حركة الريح
+  windLineMat.opacity = (STATE.stage === 2 && wind > 0.18)
+    ? Math.min(0.5, (wind - 0.18) * 0.68)
+    : 0;
+  windLines.forEach(line => {
+    if (STATE.stage !== 2 || wind <= 0.18) return;
+    line.position.x += line.userData.speed * (0.4 + wind * 5.5) * delta;
+    if (line.position.x > 3.8) line.position.x = -3.8;
+  });
+
+  // 4. استجابة نموذج الشجرة للريح
+  if (palmGroup.visible) {
+    const uprooted = STATE.currentTree === 'bad' && STATE.badUprooted;
+    palmGroup.rotation.z = uprooted ? -1.15 : Math.sin(time * 3.0) * (0.015 * wind) - 0.06 * wind;
+    palmGroup.position.y = uprooted ? -0.25 : 0;
+  }
+
+  // 5. اقتلاع وسقوط الشجرة الخبيثة
+  if (badTree.visible) {
+    const targetFall = STATE.badUprooted ? 1 : 0;
+    badFallRatio += (targetFall - badFallRatio) * Math.min(1, delta * 2.8);
+    const ease = badFallRatio * badFallRatio * (3 - 2 * badFallRatio);
+    badTree.rotation.z = -1.4 * ease - Math.sin(time * 6) * 0.06 * wind * (1 - ease);
+    badTree.position.set(treeRootPosition.x + 0.3 * ease, treeRootPosition.y + 0.25 * ease + 0.04 * wind * (1 - ease), treeRootPosition.z);
+  }
+
+  // 6. دوران بطيء عند البداية
+  if (STATE.stage === 0 && !isPointerDragging) {
+    worldGroup.rotation.y += delta * 0.12;
+  }
+
+  // 7. تحديث إحداثيات الملصقات
+  updateSpatialPins();
+
+  renderer.render(scene, camera);
+}
+
+// ضبط موضع الكاميرا الذكي ليحتوي الشجرة بالكامل في المساحة الحرة دون قص
+function handleResize() {
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+  renderer.setSize(w, h);
+  camera.aspect = w / h;
+
+  // الأبعاد تشمل أطراف السعف الممتدة والجذور، مع قياس منفصل للشجيرة في مرحلة الريح
+  const isBadTree = STATE.currentTree === 'bad';
+  const treeHeight = isBadTree ? 2.7 : 4.0;
+  const treeWidth = isBadTree ? 3.0 : 4.8;
+
+  // قياس المساحة الحرة الحقيقية بين شريط الآية العلوي واللوحة العائمة السفلية
+  const ayahEl = document.getElementById('ayah-card');
+  const ayahRect = ayahEl ? ayahEl.getBoundingClientRect() : null;
+  const topCover = (ayahRect && ayahRect.bottom > 0) ? (ayahRect.bottom + 12) : ((w < 600) ? 120 : 95);
+
+  const sheetRect = bottomSheet ? bottomSheet.getBoundingClientRect() : null;
+  const bottomCover = (sheetRect && sheetRect.top < h) ? (h - sheetRect.top + 14) : ((w < 600) ? 220 : 180);
+
+  const freeHeight = Math.max(h * 0.35, h - topCover - bottomCover);
+  const freeCenterPixelY = topCover + freeHeight * 0.5;
+  const pixelShiftY = (h * 0.5) - freeCenterPixelY;
+
+  // معامل أمان واسع يمنع قص أطراف السعف أو الجذور على الشاشات الرأسية والأفقية
+  const safetyFactor = (w < 600) ? 1.48 : 1.30;
+  const radFov = (camera.fov * Math.PI) / 180;
+  const neededFrustumH = (treeHeight * safetyFactor) * (h / freeHeight);
+  const distForHeight = neededFrustumH / (2 * Math.tan(radFov / 2));
+  const distForWidth = (treeWidth * safetyFactor) / (2 * Math.tan(radFov / 2) * camera.aspect);
+  const baseDistance = Math.max(distForHeight, distForWidth, 8.2);
+  const finalDistance = baseDistance * userZoomFactor;
+
+  // إزاحة الهدف الرأسي لمحاذاة مركز المجسم (1.15) في منتصف النافذة الحرة
+  const worldUnitsPerPixel = (2 * finalDistance * Math.tan(radFov / 2)) / h;
+  const worldShiftY = pixelShiftY * worldUnitsPerPixel;
+  const objectCenterY = isBadTree ? 0.9 : 1.5;
+  const targetLookY = objectCenterY - worldShiftY;
+
+  // زاوية نظر علوية خفيفة (~7 درجات) لإبراز مقطع التربة والجذور وعمق السعف
+  const pitchAngle = 0.12;
+  const camY = targetLookY + Math.sin(pitchAngle) * finalDistance;
+  const camZ = Math.cos(pitchAngle) * finalDistance;
+
+  camera.position.set(0, camY, camZ);
+  camera.lookAt(0, targetLookY, 0);
+  camera.updateProjectionMatrix();
+}
+
+window.addEventListener('resize', handleResize);
+
+// انطلاق
+handleResize();
+loadStage();
+renderer.setAnimationLoop(animateScene);
+
+})();
+</script>
+</body>
+</html>
